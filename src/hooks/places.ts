@@ -7,12 +7,10 @@ export function usePlaces() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  // добавление новой кальянной
   function addPlace(place: IPlace) {
     setPlaces(prev => [...prev, place])
   }
 
-  // вывод кальянных, которые выбраны по фильтру
   function selectPlaces(selectedPlaces: IPlace[]) {
     setPlaces(prev => [...selectedPlaces])
   }
