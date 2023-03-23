@@ -1,10 +1,10 @@
 import axios, { AxiosError } from "axios"
 import { useContext, useState } from "react"
-import { CreatePlace } from "../components/CreatePlace"
+import { CreatePlaceModal } from "../components/modal/CreatePlaceModal"
 import { ErrorMessage } from "../components/ErrorMessage"
 import { Place } from "../components/Place"
 import { Loader } from "../components/Loader"
-import { Modal } from "../components/Modal"
+import { ModalBase } from "../components/modal/ModalBase"
 import { SearchPlacesTab } from "../components/SearchPlacesTab"
 import { ModalContext } from "../context/ModalContext"
 import { usePlaces } from "../hooks/places"
@@ -33,9 +33,9 @@ export function PlacesPage() {
           { error && <ErrorMessage error={error} /> }
           { places.map(place => <Place place={ place } key={ place.id } />) }
     
-          { modal && <Modal title="Create new place" onClose={close}>
-            <CreatePlace onCreate={createHandler} />
-          </Modal>}
+          { modal && <ModalBase title="Create new place" onClose={close}>
+            <CreatePlaceModal onCreate={createHandler} />
+          </ModalBase>}
     
           <button
             className="fixed bottom-5 right-5 rounded-full bg-red-700 text-white text-2xl px-4 py-2"

@@ -20,10 +20,9 @@ export function usePlaces() {
       setError('')
       setLoading(true)
 
-      const response = await axios.get<IPlace[]>('http://localhost:5211/place/all')
+      const response = await axios.get<IPlace[]>('http://localhost:5211/loungebar/all')
       setPlaces(response.data)
 
-      // }
       setLoading(false)
     } catch (e: unknown) {
       const error = e as AxiosError

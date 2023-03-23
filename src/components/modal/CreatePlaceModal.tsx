@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import {IPlace as IPlace} from '../models'
+import {IPlace as IPlace} from '../../models'
 import axios from 'axios'
-import {ErrorMessage} from './ErrorMessage'
-import { TextField } from './form/TextField'
-import { Button } from './form/Button'
+import {ErrorMessage} from '../ErrorMessage'
+import { TextField } from '../form/TextField'
+import { Button } from '../form/Button'
 
 const placeData: IPlace =  {
     title: '',
@@ -12,7 +12,7 @@ const placeData: IPlace =  {
     pros: "-",
     cons: "-",
 
-    quality: "Норм",
+    quality: "5",
     vipRoomInfo: '',
     isTest: true,
 }
@@ -21,12 +21,13 @@ interface CreatePlaceProps {
   onCreate: (place: IPlace) => void
 }
 
-export function CreatePlace({ onCreate }: CreatePlaceProps) {
+export function CreatePlaceModal({ onCreate }: CreatePlaceProps) {
   const [title, setTitle] = useState('')
   const [address, setAddress] = useState('')
   const [approxPrice, setPrice] = useState('')
   const [pros, setPros] = useState('')
   const [cons, setCons] = useState('')
+  const [quality, setQuality] = useState('')
   const [error, setError] = useState('')
 
   const changeTitleHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -44,6 +45,12 @@ export function CreatePlace({ onCreate }: CreatePlaceProps) {
   const changeConsHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     setCons(event.target.value)
   }
+  const changeQualityHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const re = /^[0-9\b]{1}$/;
+    if (event.target.value === '' || re.test(event.target.value)) {
+      setQuality(event.target.value)
+    }
+  }
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault()
@@ -59,8 +66,9 @@ export function CreatePlace({ onCreate }: CreatePlaceProps) {
     placeData.approxPrice = approxPrice
     placeData.pros = pros
     placeData.cons = cons
+    placeData.quality = quality
 
-    const response = await axios.post<IPlace>('http://localhost:5211/place/new', placeData)
+    const response = await axios.post<IPlace>('http://localhost:5211/loungebar/new', placeData)
 
     onCreate(response.data)
   }
@@ -72,6 +80,7 @@ export function CreatePlace({ onCreate }: CreatePlaceProps) {
       <TextField label="Цена" value={approxPrice} onChange={changePriceHandler} />
       <TextField label="Плюсы" value={pros} onChange={changeProsHandler} />
       <TextField label="Минусы" value={cons} onChange={changeConsHandler} />
+      <TextField label="Качество услуг" value={quality} onChange={changeQualityHandler} />
 
       {error && <ErrorMessage error={error} />}
 
