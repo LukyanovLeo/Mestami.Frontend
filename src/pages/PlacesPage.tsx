@@ -9,6 +9,7 @@ import { SearchPlacesTab } from "../components/SearchPlacesTab"
 import { ModalContext } from "../context/ModalContext"
 import { usePlaces } from "../hooks/places"
 import { IPlace } from "../models"
+import { PlaceContainer } from "../components/PlaceContainer"
 
 export function PlacesPage() {
     const {places, error, loading, addPlace, selectPlaces} = usePlaces()
@@ -28,10 +29,11 @@ export function PlacesPage() {
         <div className="container-fluid">
           <SearchPlacesTab onSelect={selectHandler} />
         </div>
-        <div className="container mx-auto max-w-2xl pt-5">
+        <div className="container-fluid"> 
+        {/* mx-auto max-w-2xl pt-5 */}
           { loading && <Loader /> }
           { error && <ErrorMessage error={error} /> }
-          { places.map(place => <Place place={ place } key={ place.id } />) }
+          { <PlaceContainer children={places.map(place => <Place place={ place } key={ place.id } />)} /> }
     
           { modal && <ModalBase title="Create new place" onClose={close}>
             <CreatePlaceModal onCreate={createHandler} />
