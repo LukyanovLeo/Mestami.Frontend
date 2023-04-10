@@ -35,7 +35,7 @@ export function PlacesPage() {
           { error && <ErrorMessage error={error} /> }
           { <PlaceContainer children={places.map(place => <Place place={ place } key={ place.id } />)} /> }
     
-          { modal && <ModalBase title="Create new place" onClose={close}>
+          { modal && <ModalBase title="Добавьте новое место" onClose={close}>
             <CreatePlaceModal onCreate={createHandler} />
           </ModalBase>}
     
